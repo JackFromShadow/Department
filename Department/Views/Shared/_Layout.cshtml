@@ -5,69 +5,183 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - Department</title>
+ <style>
 
-    <environment names="Development">
-        <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
-        <link rel="stylesheet" href="~/css/site.css" />
-    </environment>
-    <environment names="Staging,Production">
-        <link rel="stylesheet" href="https://ajax.aspnetcdn.com/ajax/bootstrap/3.3.7/css/bootstrap.min.css"
-              asp-fallback-href="~/lib/bootstrap/dist/css/bootstrap.min.css"
-              asp-fallback-test-class="sr-only" asp-fallback-test-property="position" asp-fallback-test-value="absolute" />
-        <link rel="stylesheet" href="~/css/site.min.css" asp-append-version="true" />
-    </environment>
-    @Html.Raw(JavaScriptSnippet.FullScript)
+
+/* Main Menu */
+
+ul#main-menu {
+	font-family: 'Lato', sans-serif;
+	font-family: 13px;
+	font-weight: 300;
+	list-style: none;
+	position: absolute;
+	cursor: pointer;
+}
+
+ul#main-menu > ul {
+	list-style: none;
+	opacity: 0;
+}
+
+ul#main-menu li {
+	background: #006bb6;
+	padding: 15px 50px 15px 10px;
+	border-bottom: 1px solid #fff;
+}
+
+ul#main-menu li:hover {
+	background: #9eccb3;
+}
+
+ul#main-menu li:first-child {
+	border-radius: 0 5px 0 0;
+}
+
+ul#main-menu li a {
+	color: #fff;
+	text-decoration: none;
+}
+
+ul#main-menu i {
+	padding-right: 15px;
+	padding-left: 5px;
+}
+
+/* Submenu */
+
+#submenu {
+	color: #fff;
+	position: absolute;
+	width: 120px;
+	left: 202px;
+	margin-top: -50px;
+}
+
+ul#submenu > li {
+	padding: 10px;
+}
+
+ul#main-menu ul#submenu.show-submenu {
+	opacity: 1;
+	cursor: pointer;
+	-webkit-transition: all 0.5s ease;
+    -moz-transition: all 0.5s ease;
+    -o-transition: all 0.5s ease;
+	transition: all 0.5s ease;
+}
+
+ul#main-menu ul#submenu.hide-submenu {
+	cursor: pointer;
+	display: none;
+}
+ </style>      
 </head>
-<body>
-    <nav class="navbar navbar-inverse navbar-fixed-top">
-        <div class="container">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <a asp-area="" asp-controller="Home" asp-action="Index" class="navbar-brand">Department</a>
-            </div>
-            <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                    <li><a asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
-                    <li><a asp-area="" asp-controller="Home" asp-action="About">About</a></li>
-                    <li><a asp-area="" asp-controller="Home" asp-action="Contact">Contact</a></li>
-                </ul>
-            </div>
-        </div>
-    </nav>
-    <div class="container body-content">
-        @RenderBody()
-        <hr />
-        <footer>
-            <p>&copy; 2017 - Department</p>
-        </footer>
-    </div>
-
-    <environment names="Development">
-        <script src="~/lib/jquery/dist/jquery.js"></script>
-        <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
-        <script src="~/js/site.js" asp-append-version="true"></script>
-    </environment>
-    <environment names="Staging,Production">
-        <script src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-2.2.0.min.js"
-                asp-fallback-src="~/lib/jquery/dist/jquery.min.js"
-                asp-fallback-test="window.jQuery"
-                crossorigin="anonymous"
-                integrity="sha384-K+ctZQ+LL8q6tP7I94W+qzQsfRV2a+AfHIi9k8z8l9ggpc8X+Ytst4yBo/hH+8Fk">
-        </script>
-        <script src="https://ajax.aspnetcdn.com/ajax/bootstrap/3.3.7/bootstrap.min.js"
-                asp-fallback-src="~/lib/bootstrap/dist/js/bootstrap.min.js"
-                asp-fallback-test="window.jQuery && window.jQuery.fn && window.jQuery.fn.modal"
-                crossorigin="anonymous"
-                integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa">
-        </script>
-        <script src="~/js/site.min.js" asp-append-version="true"></script>
-    </environment>
-
-    @RenderSection("Scripts", required: false)
-</body>
+        <body onload="menuInit();">
+            @RenderBody()
+            <nav id="navbar">
+                <ul id="main-menu">
+                    <li><a href="#" target="_blank"><i class="fa fa-home"></i>Home</a></li>
+                    <li><a href="#" target="_blank"><i class="fa fa-list-alt"></i>About</a></li>
+                    <li id="dropdown-item"><a href="#"><i class="fa fa-coffee"></i>Work With Me</a></li>
+                           <ul id="submenu" class="hide-submenu">
+                               <li>AngularJS</li>
+                               <li>JavaScript</li>
+                               <li>HTML5</li>
+                               <li>CSS3</li>
+                          </ul>
+                    <li><a href="#" target="_blank"><i class="fa fa-quote-left"></i>Testimonials</a></li>
+                    <li><a href="#" target="_blank"><i class="fa fa-user"></i>Contact</a></li>
+                </ul><!-- main-menu -->
+            </nav><!-- navbar -->
+        </body>
+<sidebar>
+   
 </html>
+
+<script>
+     function menuInit() {
+         var dropdown = document.getElementById("dropdown-item");
+         var submenu = document.getElementById("submenu");
+
+         dropdown.onmouseover = popOutMenu;
+         dropdown.onmouseout = hideDropdown;
+
+         submenu.onmouseover = popOutMenu;
+         submenu.onmouseout = hideDropdown;
+     }
+
+     function popOutMenu() {
+         submenu.className = "show-submenu";
+     }
+
+     function hideDropdown() {
+         submenu.className = "hide-submenu";
+     }
+</script>
+
+
+
+@*<nav class="mainNav">
+            <ul>
+                <li><a href="#" data-title="Главная">Главная</a></li>
+                <li><a href="#" data-title="О нас">О нас</a></li>
+                <li><a href="#" data-title="Клиенты">Клиенты</a></li>
+                <li><a href="#" data-title="Вакансии">Вакансии</a></li>
+                <li><a href="#" data-title="Контакты">Контакты</a></li>
+            </ul>
+        </nav>
+
+
+    <nav class="na    @Styles.Render("wwwroot/css/site.css")
+
+        vbar navbar-inverse navbar-fixed-top">
+           <div class="container">
+               <div class="navbar-header">
+                   <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                       <span class="sr-only">Toggle navigation</span>
+                       <span class="icon-bar"></span>
+                       <span class="icon-bar"></span>
+                       <span class="icon-bar"></span>
+                   </button>
+                   <a asp-area="" asp-controller="Home" asp-action="Index" class="navbar-brand">Department</a>
+               </div>
+               <div class="navbar-collapse collapse">
+                   <ul class="nav navbar-nav">
+                       <li><a asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
+                       <li><a asp-area="" asp-controller="Home" asp-action="About">About</a></li>
+                       <li><a asp-area="" asp-controller="Home" asp-action="Contact">Contact</a></li>
+                   </ul>
+               </div>
+           </div>
+       </nav>
+
+    <body>
+
+
+
+
+       <environment names="Development">
+           <script src="~/lib/jquery/dist/jquery.js"></script>
+           <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
+           <script src="~/js/site.js" asp-append-version="true"></script>
+       </environment>
+       <environment names="Staging,Production">
+           <script src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-2.2.0.min.js"
+                   asp-fallback-src="~/lib/jquery/dist/jquery.min.js"
+                   asp-fallback-test="window.jQuery"
+                   crossorigin="anonymous"
+                   integrity="sha384-K+ctZQ+LL8q6tP7I94W+qzQsfRV2a+AfHIi9k8z8l9ggpc8X+Ytst4yBo/hH+8Fk">
+           </script>
+           <script src="https://ajax.aspnetcdn.com/ajax/bootstrap/3.3.7/bootstrap.min.js"
+                   asp-fallback-src="~/lib/bootstrap/dist/js/bootstrap.min.js"
+                   asp-fallback-test="window.jQuery && window.jQuery.fn && window.jQuery.fn.modal"
+                   crossorigin="anonymous"
+                   integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa">
+           </script>
+           <script src="~/js/site.min.js" asp-append-version="true"></script>
+       </environment>
+
+       @RenderSection("Scripts", required: false)
+
+*@

@@ -56,5 +56,6 @@ namespace Department
                     template: "{controller=Home}/{action=Index}/{id?}");
             });
         }
+
     }
 }
